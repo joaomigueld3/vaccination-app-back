@@ -43,6 +43,16 @@ DATABASE_URL=your_mongodb_connection_string
 yarn dev
 ```
 
+### 6️⃣ Run Lint
+```sh
+npm run lint
+```
+
+### 7️⃣ Run Tests
+```sh
+npm test
+```
+
 ## 🛠 Features
 ### 🔹 API REST with Express  
 ✔ Middleware-based architecture  
@@ -62,3 +72,12 @@ Required fields: name, email, CPF, birthDate, appDate, appTime
 Unique constraints:  
     ✔ email and CPF must be unique  
     ✔ appDate and appTime cannot be duplicated for another appointment  
+
+## 📚 API Docs (Swagger)
+- Swagger UI route: `/docs`
+- Local access example: `http://localhost:3000/docs`
+- OpenAPI spec location: `docs/swagger.js`
+
+## 🧪 Extra Documentation
+- Test guide: `docs/TESTING.md`
+- API docs notes: `docs/API.md`

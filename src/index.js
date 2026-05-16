@@ -6,6 +6,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import AppointmentRouter from './router/AppointmentRouter.js';
+import docsRouter from '../docs/swaggerRouter.js';
 
 dotenv.config({ path: '.env.example' });
 
@@ -13,7 +14,7 @@ const { DATABASE_URL, PORT } = process.env;
 mongoose
   .connect(DATABASE_URL)
   .then(() => {
-    console.log('Database Connected...');
+    console.info('Database Connected...');
   })
   .catch((error) => {
     console.error(`Error to connect to database: ${error.message}`);
@@ -28,7 +29,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use(AppointmentRouter);
+app.use(docsRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server running on PORT ${PORT}`);
+  console.info(`Server running on PORT ${PORT}`);
 });

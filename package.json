@@ -6,7 +6,9 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test": "node --test",
+    "lint": "eslint ."
   },
   "author": "João de Melo <joaomigueld3@gmail.com>",
   "license": "MIT",
@@ -16,7 +18,9 @@
     "express": "^4.17.3",
     "helmet": "^5.0.2",
     "mongoose": "^6.3.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "eslint": "^8.14.0",

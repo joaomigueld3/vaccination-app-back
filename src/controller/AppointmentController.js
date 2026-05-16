@@ -6,7 +6,7 @@ class AppointmentController {
   async index(request, response) {
     try {
       const app = await AppointmentModel.find();
-      if (app.length == 0) {
+      if (app.length === 0) {
         return response.status(404).json({ message: 'No appointments found in database' });
       }
 
@@ -14,20 +14,14 @@ class AppointmentController {
       for (let i = 0; i < app.length; i++) {
         aux[i] = app[i].appDate;
       }
-      console.log(aux);
-      // sorted dates
       bubbleSort(aux);
-      console.log(aux);
       const aux3 = [];
-      // array aux3 with objects sorted by date
       sortByDate(aux, aux3, app);
       const aux4 = aux3;
       for (let i = 0; i < aux3.length; i++) {
         const datetime = new Date(`${aux3[i].appDate.toISOString().slice(0, 11) + aux3[i].appTime}Z`);
-        console.log(datetime);
         aux4[i].appDate = datetime;
       }
-      console.log(aux4);
       const aux5 = [];
       for (let i = 0; i < aux4.length; i++) {
         aux5[i] = aux4[i].appDate;
@@ -37,8 +31,7 @@ class AppointmentController {
       sortByDate(aux5, aux6, aux4);
       return response.send(aux6);
     } catch (error) {
-      console.log(error.message);
-      response.status(400).send({ message: 'An unexpected error happened' });
+      return response.status(400).send({ message: 'An unexpected error happened' });
     }
   }
 
@@ -53,8 +46,7 @@ class AppointmentController {
 
       return response.status(404).json({ message: 'appointment not found!' });
     } catch (error) {
-      console.log(error.message);
-      response.status(400).send({ message: 'An unexpected error happened' });
+      return response.status(400).send({ message: 'An unexpected error happened' });
     }
   }
 
@@ -69,19 +61,11 @@ class AppointmentController {
       if (!verifyApp && !verifyCpf) {
         const stringToDate = Date.parse(appDate);
         const newDate = new Date(stringToDate);
-        console.log(appDate);
-        console.log(stringToDate);
-        console.log(newDate);
         const checkDay = await AppointmentModel.find({ appDate: newDate });
-        console.log({ checkDay });
-        // if someone already booked an app this day
+
         if (checkDay) {
           for (let i = 0; i < checkDay.length; i++) {
-            console.log(checkDay);
             const appTimeNew = checkDay[i].appTime;
-            console.log(checkDay[i].appTime);
-            console.log(appTime);
-            console.log(appTimeNew);
             if (appTime === appTimeNew) {
               return response.status(400).send(
                 { message: 'another appointment is already booked for this day and time' },
@@ -110,11 +94,9 @@ class AppointmentController {
         Object.keys(error.errors).forEach((key) => {
           errors[key] = error.errors[key].message;
         });
-        console.log(errors);
         return response.status(400).send({ message: JSON.stringify(errors) });
       }
-      console.log(error.message);
-      response.status(400).send({ message: error.message });
+      return response.status(400).send({ message: error.message });
     }
   }
 
@@ -126,10 +108,9 @@ class AppointmentController {
         await verifyApp.remove();
         return response.status(200).send({ message: 'Appointment removed' });
       }
-      response.status(404).send({ message: "Appointment not found, therefore can't be removed" });
+      return response.status(404).send({ message: "Appointment not found, therefore can't be removed" });
     } catch (error) {
-      console.log(error.message);
-      response.status(400).send({ message: 'An unexpected error happened' });
+      return response.status(400).send({ message: 'An unexpected error happened' });
     }
   }
 
@@ -156,8 +137,7 @@ class AppointmentController {
       }
       return response.status(404).send({ message: "Appointment not found, therefore can't be updated" });
     } catch (error) {
-      console.log(error.message);
-      response.status(400).send({ message: error.message });
+      return response.status(400).send({ message: error.message });
     }
   }
 }
